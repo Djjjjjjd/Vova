@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 </script>
 <template>
-  <header class="w-full backdrop-blur-sm fixed">
+  <header class="w-full backdrop-blur-sm fixed z-100">
     <div class="container mx-auto p-5">
       <div class="flex items-center justify-between">
         <!-- logo -->
-        <div class="flex items-center gap-5">
+        <div class="flex items-center gap-5 cursor-pointer">
           <img src="/images/logoBlack.png" class="max-w-[90px]" alt="logo" />
           <div class="">
             <h2>СТУДИЯ ИМПЛАНТОЛОГИИ</h2>
