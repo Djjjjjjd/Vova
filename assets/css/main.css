@@ -17,12 +17,42 @@ body {
 
    /* btn */
    .btn-primary{
-      @apply bg-blue-400 text-white shadow-md px-10 py-3 rounded-md cursor-pointer hover:bg-blue-500 hover:shadow-xl transition-colors;
+      @apply bg-blue-400 text-white shadow-md rounded-md cursor-pointer hover:bg-blue-500 hover:shadow-xl transition-all;
    }
    .btn-primary-outline{
-      @apply text-white shadow-md outline outline-2 outline-solid outline-blue-400 outline-offset-0 px-10 py-3 rounded-md cursor-pointer hover:outline-blue-500 hover:shadow-xl transition-colors;
+      @apply text-white shadow-md outline outline-2 outline-solid outline-blue-400 outline-offset-0 rounded-md cursor-pointer hover:outline-blue-500 hover:shadow-xl transition-colors;
    }
    .foot-link{
       @apply hover:text-blue-400;
    }
 }
+
+/* drop down */
+
+@layer components{
+   .dropdown-link{
+      @apply block relative px-3 py-5 text-black hover:text-blue-500 transition-colors decoration-0;
+   }
+}
+
+@layer components{
+   .inputs{
+      @apply w-[60%] p-5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none;
+   }
+   .inputs{
+      @apply hover:scale-[102%] transition-all;
+   }
+}
+ .dropdown-link::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 0;
+   height: 2px;
+   background-color: #007bff; /* Синий цвет линии */
+   transition: width 0.3s ease;
+ }
+ .dropdown-link:hover::after {
+   width: 70%; /* Линия подчеркивания растягивается */
+ } 

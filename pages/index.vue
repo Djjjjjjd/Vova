@@ -97,8 +97,8 @@ const scrollRight = () => {
               Lorem Ipsum has been the
               industry's standard dummy</p>
             <div class=" flex gap-10">
-              <button class="btn-primary">free consult</button>
-              <button class="btn-primary-outline">not free consult</button>
+              <button class="btn-primary px-10 py-3">free consult</button>
+              <button class="btn-primary-outline px-10 py-3">not free consult</button>
             </div>
           </div>
         </div>
