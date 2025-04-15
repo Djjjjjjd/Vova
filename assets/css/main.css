@@ -34,15 +34,18 @@ body {
       @apply block relative px-3 py-5 text-black hover:text-blue-500 transition-colors decoration-0;
    }
 }
-
+/* inputs */
 @layer components{
    .inputs{
       @apply w-[60%] p-5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none;
    }
    .inputs{
-      @apply hover:scale-[102%] transition-all;
+      @apply hover:scale-[102%] focus:scale-[102%] transition-all;
    }
 }
+
+
+
  .dropdown-link::after {
    content: '';
    position: absolute;

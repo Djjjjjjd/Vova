@@ -4,5 +4,5 @@
     <div class="bg-zinc-300">
       <slot />
     </div>
-    <siteFooter class="pt-7 bg-zinc-300"/>
+    <siteFooter class="pt-25 bg-zinc-300"/>
 </template>

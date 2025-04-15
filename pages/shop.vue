@@ -83,9 +83,6 @@ onUnmounted(() => {
           <div class="parallax-card opacity-0 transform translate-y-10">
             <CratForSale />
           </div>
-          <div class="parallax-card opacity-0 transform translate-y-10">
-            <CratForSale />
-          </div>
         </div>
       </div>
     </div>
@@ -95,6 +92,10 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.min-h-screen {
+  padding-bottom: 160px; /* Отступ для футера */
+}
+
 .parallax-card {
   transition: opacity 0.5s ease, transform 0.5s ease; /* Плавный переход */
 }
