@@ -37,10 +37,10 @@ body {
 /* inputs */
 @layer components{
    .inputs{
-      @apply w-[60%] p-5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none;
+      @apply w-[70%] rounded-md outline outline-gray-300 focus:outline-none  focus:border-none shadow-md;
    }
    .inputs{
-      @apply hover:scale-[102%] focus:scale-[102%] transition-all;
+      @apply hover:scale-[101%] hover:outline-blue-500 hover:outline-2 focus:scale-[101%] focus:outline-blue-500 focus:outline-2 focus:ring-2 focus:ring-blue-500 hover:shadow-xl focus:shadow-xl transition-all;
    }
 }
 
