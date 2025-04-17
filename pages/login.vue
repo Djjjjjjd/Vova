@@ -43,8 +43,8 @@ const login = async () => {
         // Сохранение данных пользователя в localStorage
         localStorage.setItem('user', JSON.stringify(userData));
 
-        // Перенаправление в личный кабинет
-        router.push('/index');
+        // Перенаправление на главную страницу
+        router.push('/');
       } else {
         errorMessage.value = 'Не удалось получить данные пользователя.';
       }

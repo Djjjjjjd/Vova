@@ -1,48 +1,29 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref } from 'vue';
+
 let lastScrollY = 0;
 let ticking = false;
 
 const handleScroll = () => {
+  if (typeof window === 'undefined') return; // Ensure this runs only in the browser
+
   lastScrollY = window.scrollY;
 
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      const clamp = document.querySelector('.parallax-clamp') as HTMLElement;
-      const imp = document.querySelector('.parallax-imp') as HTMLElement;
+      const clamp = document.querySelector('.parallax-clamp') as HTMLElement | null;
+      const imp = document.querySelector('.parallax-imp') as HTMLElement | null;
+      const map = document.querySelector('#map') as HTMLElement | null;
+      const block = document.querySelector('#block') as HTMLElement | null;
+      const blockTwo = document.querySelector('#block-two') as HTMLElement | null;
+      const groupImage = document.querySelector('img[alt="group"]') as HTMLElement | null;
 
-      if (clamp) {
-        clamp.style.transform = `translateY(${lastScrollY * 0.1}px)`; // Медленное движение
-      }
-
-      if (imp) {
-        imp.style.transform = `translateY(${lastScrollY * 0.15}px)`; // Немного быстрее, чем clamp
-      }
-
-      const map = document.querySelector('#map') as HTMLElement;
-      const block = document.querySelector('#block') as HTMLElement;
-      const blockTwo = document.querySelector('#block-two') as HTMLElement;
-      const groupImage = document.querySelector('img[alt="group"]') as HTMLElement;
-
-      // Увеличенный параллакс для карты
-      if (map) {
-        map.style.transform = `translateY(${lastScrollY * 0.1}px)`; // Чуть сильнее эффект
-      }
-
-      // Легкий параллакс для блока
-      if (block) {
-        block.style.transform = `translateY(${lastScrollY * 0.05}px)`; // Легкий эффект
-      }
-
-      // Легкий параллакс для второго блока
-      if (blockTwo) {
-        blockTwo.style.transform = `translateY(${lastScrollY * 0.03}px)`; // Очень легкий эффект
-      }
-
-      // Легкий параллакс для изображения
-      if (groupImage) {
-        groupImage.style.transform = `translateY(${lastScrollY * 0.07}px)`; // Чуть сильнее
-      }
+      if (clamp) clamp.style.transform = `translateY(${lastScrollY * 0.1}px)`;
+      if (imp) imp.style.transform = `translateY(${lastScrollY * 0.15}px)`;
+      if (map) map.style.transform = `translateY(${lastScrollY * 0.1}px)`;
+      if (block) block.style.transform = `translateY(${lastScrollY * 0.05}px)`;
+      if (blockTwo) blockTwo.style.transform = `translateY(${lastScrollY * 0.03}px)`;
+      if (groupImage) groupImage.style.transform = `translateY(${lastScrollY * 0.07}px)`;
 
       ticking = false;
     });
@@ -52,10 +33,26 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
+  if (typeof window === 'undefined') return; // Ensure this runs only in the browser
+
+  const feedbackContainer = document.querySelector('#feedback') as HTMLElement | null;
+
+  if (feedbackContainer) {
+    feedbackContainer.addEventListener('scroll', handleScroll);
+  }
+
   window.addEventListener('scroll', handleScroll);
 });
 
 onUnmounted(() => {
+  if (typeof window === 'undefined') return; // Ensure this runs only in the browser
+
+  const feedbackContainer = document.querySelector('#feedback') as HTMLElement | null;
+
+  if (feedbackContainer) {
+    feedbackContainer.removeEventListener('scroll', handleScroll);
+  }
+
   window.removeEventListener('scroll', handleScroll);
 });
 
@@ -64,7 +61,7 @@ const feedbackContainer = ref<HTMLDivElement | null>(null);
 const scrollLeft = () => {
   if (feedbackContainer.value) {
     feedbackContainer.value.scrollBy({
-      left: -300, // Прокрутка влево
+      left: -300,
       behavior: 'smooth',
     });
   }
@@ -73,7 +70,7 @@ const scrollLeft = () => {
 const scrollRight = () => {
   if (feedbackContainer.value) {
     feedbackContainer.value.scrollBy({
-      left: 300, // Прокрутка вправо
+      left: 300,
       behavior: 'smooth',
     });
   }

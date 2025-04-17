@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const isDropdownOpen = ref(false);
@@ -10,29 +10,43 @@ const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
+const scrollToFooter = () => {
+  const footer = document.querySelector('footer');
+  if (footer) {
+    footer.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 // Закрытие меню при изменении маршрута
 const route = useRoute();
 watch(route, () => {
   isDropdownOpen.value = false;
 });
 
-// Функция для прокрутки к футеру с эффектом скольжения
-const scrollToFooter = () => {
-  const footer = document.querySelector('footer');
-  if (footer) {
-    window.scrollTo({
-      top: footer.offsetTop,
-      behavior: 'smooth', // Плавный скролл
-    });
-  }
-};
-
 // Проверка токена и данных пользователя при загрузке
-onMounted(() => {
+const updateUser = () => {
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     user.value = JSON.parse(storedUser);
   }
+};
+
+onMounted(() => {
+  updateUser();
+
+  // Следим за изменением токена в localStorage
+  const storageHandler = (event: StorageEvent) => {
+    if (event.key === 'user') {
+      updateUser();
+    }
+  };
+
+  window.addEventListener('storage', storageHandler);
+
+  // Удаляем обработчик при размонтировании
+  onUnmounted(() => {
+    window.removeEventListener('storage', storageHandler);
+  });
 });
 
 const logout = () => {
@@ -65,8 +79,10 @@ const logout = () => {
           <nav class="relative">
             <a class="nav-link cursor-pointer" id="template" @click="toggleDropdown">Create New Template</a>
             <!-- Dropdown Menu -->
-            <div v-if="isDropdownOpen"
-              class="absolute top-10 left-0 w-[230px] h-[350px] backdrop-blur-sm bg-zinc-300/30 rounded-md shadow-md flex flex-col gap-5 p-5">
+            <div
+              v-if="isDropdownOpen"
+              class="absolute top-10 left-0 w-[230px] h-[350px] backdrop-blur-sm bg-zinc-300/30 rounded-md shadow-md flex flex-col gap-5 p-5"
+            >
               <NuxtLink to="/shop" class="dropdown-link">Template</NuxtLink>
               <NuxtLink to="/creator" class="dropdown-link">Template 2</NuxtLink>
               <NuxtLink to="/template3" class="dropdown-link">Template 3</NuxtLink>
@@ -77,14 +93,34 @@ const logout = () => {
           <div v-if="user" class="flex items-center gap-4">
             <span class="text-lg">Привет, {{ user.username }}</span>
             <button @click="logout" class="btn-primary-outline px-4 py-2">
-              Logout
+              Выйти
             </button>
           </div>
-          <NuxtLink v-else to="/autoteficationSignIn" class="btn-primary px-10 py-3">
-            Sign In
-          </NuxtLink>
+          <div v-else class="relative group flex items-center gap-2">
+            <NuxtLink
+              to="/autoteficationSignIn"
+              class="btn-primary px-10 py-3 transition-all"
+            >
+              Sign In
+            </NuxtLink>
+            <NuxtLink
+              to="/login"
+              class="btn-primary-outline px-10 py-3 transition-all"
+            >
+              Log in
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
   </header>
 </template>
+
+<style scoped>
+/* Стили для кнопок */
+.group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Расстояние между кнопками */
+}
+</style>
