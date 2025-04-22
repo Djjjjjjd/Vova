@@ -19,11 +19,15 @@ export default defineNuxtConfig({
       ]
     }
   },
+  
   modules: ['@pinia/nuxt'],
-
+  
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss(),],
+    resolve: {
+      alias: {
+        'lodash/fp': 'lodash/fp.js', 
+      },
+    },
   },
 })
